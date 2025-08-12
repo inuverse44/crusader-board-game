@@ -1,0 +1,276 @@
+/* ゲームピースの基本スタイル */
+.game-piece {
+  width: 90%;
+  height: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  z-index: 5;
+  overflow: hidden;
+}
+
+.game-piece::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transform: rotate(45deg);
+  transition: all 0.3s ease;
+  opacity: 0;
+}
+
+.game-piece:hover::before {
+  opacity: 1;
+  animation: shine 0.6s ease-in-out;
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100%) translateY(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) translateY(100%) rotate(45deg);
+  }
+}
+
+.game-piece:hover {
+  transform: scale(1.15) translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+/* 選択状態 */
+.game-piece.selected {
+  transform: scale(1.2) translateY(-3px);
+  box-shadow: 
+    0 0 0 3px #ffd700,
+    0 0 20px rgba(255, 215, 0, 0.6),
+    0 10px 30px rgba(0, 0, 0, 0.4);
+  animation: selectedGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes selectedGlow {
+  0% {
+    box-shadow: 
+      0 0 0 3px #ffd700,
+      0 0 20px rgba(255, 215, 0, 0.6),
+      0 10px 30px rgba(0, 0, 0, 0.4);
+  }
+  100% {
+    box-shadow: 
+      0 0 0 4px #ffd700,
+      0 0 30px rgba(255, 215, 0, 0.8),
+      0 12px 35px rgba(0, 0, 0, 0.5);
+  }
+}
+
+/* プレイヤー別の色分け - より美しいグラデーション */
+.game-piece.player-player1 {
+  background: linear-gradient(135deg, #3498db 0%, #2980b9 50%, #1f4e79 100%);
+  color: white;
+  border: 2px solid #2c3e50;
+  box-shadow: 
+    inset 0 2px 4px rgba(255, 255, 255, 0.3),
+    0 4px 12px rgba(52, 152, 219, 0.3);
+}
+
+.game-piece.player-player2 {
+  background: linear-gradient(135deg, #e74c3c 0%, #c0392b 50%, #922b21 100%);
+  color: white;
+  border: 2px solid #2c3e50;
+  box-shadow: 
+    inset 0 2px 4px rgba(255, 255, 255, 0.3),
+    0 4px 12px rgba(231, 76, 60, 0.3);
+}
+
+/* 駒の種類別のスタイル */
+.game-piece.piece-heavy {
+  border-width: 3px;
+  background-size: 120% 120%;
+}
+
+.game-piece.piece-heavy::after {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: 10%;
+  right: 10%;
+  bottom: 10%;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+}
+
+.game-piece.piece-light {
+  border-width: 2px;
+  background-size: 110% 110%;
+}
+
+/* アイコンスタイル */
+.piece-icon {
+  font-size: 1.8rem;
+  user-select: none;
+  pointer-events: none;
+  position: relative;
+  z-index: 10;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s ease;
+}
+
+.game-piece:hover .piece-icon {
+  transform: scale(1.1);
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+}
+
+/* アクセシビリティ対応 */
+.game-piece:focus {
+  outline: 3px solid #ffd700;
+  outline-offset: 3px;
+  z-index: 20;
+}
+
+/* 選択可能な駒のホバー効果 */
+.game-piece.selectable {
+  cursor: pointer;
+}
+
+.game-piece.selectable:hover {
+  box-shadow: 
+    0 0 0 2px rgba(255, 215, 0, 0.7),
+    0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+/* 移動アニメーション */
+@keyframes pieceMove {
+  0% {
+    transform: scale(1.2) translateY(-5px);
+  }
+  50% {
+    transform: scale(1.3) translateY(-8px);
+  }
+  100% {
+    transform: scale(1) translateY(0);
+  }
+}
+
+.game-piece.moving {
+  animation: pieceMove 0.5s ease-out;
+}
+
+/* 攻撃アニメーション */
+@keyframes pieceAttack {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.3) rotate(5deg);
+  }
+  50% {
+    transform: scale(1.2) rotate(-5deg);
+  }
+  75% {
+    transform: scale(1.3) rotate(3deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+.game-piece.attacking {
+  animation: pieceAttack 0.6s ease-out;
+}
+
+/* 撃破アニメーション */
+@keyframes pieceDestroy {
+  0% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.5) rotate(180deg);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(0) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+.game-piece.destroying {
+  animation: pieceDestroy 0.8s ease-out forwards;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 1024px) {
+  .piece-icon {
+    font-size: 1.6rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .game-piece {
+    width: 85%;
+    height: 85%;
+  }
+  
+  .piece-icon {
+    font-size: 1.4rem;
+  }
+  
+  .game-piece:hover {
+    transform: scale(1.1);
+  }
+}
+
+@media (max-width: 480px) {
+  .game-piece {
+    width: 80%;
+    height: 80%;
+  }
+  
+  .piece-icon {
+    font-size: 1.2rem;
+  }
+}
+
+/* 高コントラストモード */
+@media (prefers-contrast: high) {
+  .game-piece.player-player1 {
+    background: #000;
+    border: 3px solid #fff;
+    color: #fff;
+  }
+  
+  .game-piece.player-player2 {
+    background: #fff;
+    border: 3px solid #000;
+    color: #000;
+  }
+  
+  .piece-icon {
+    text-shadow: none;
+  }
+}
+
+/* 動きを減らす設定 */
+@media (prefers-reduced-motion: reduce) {
+  .game-piece,
+  .game-piece::before,
+  .piece-icon {
+    animation: none;
+    transition: none;
+  }
+  
+  .game-piece:hover {
+    transform: scale(1.05);
+  }
+  
+  .game-piece.selected {
+    transform: scale(1.1);
+  }
+}

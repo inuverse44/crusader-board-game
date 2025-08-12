@@ -1,0 +1,230 @@
+/* ボードマスの基本スタイル */
+.board-square {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.board-square::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: inherit;
+  transition: all 0.3s ease;
+  z-index: 0;
+}
+
+.board-square:hover::before {
+  transform: scale(1.1);
+  filter: brightness(1.1);
+}
+
+/* チェス盤の色分け - より美しいグラデーション */
+.light-square {
+  background: linear-gradient(135deg, #f5f5dc 0%, #f0d9b5 100%);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+}
+
+.dark-square {
+  background: linear-gradient(135deg, #d2b48c 0%, #b58863 100%);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* ホバー効果 */
+.board-square:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 選択状態 - より目立つエフェクト */
+.board-square.selected {
+  background: radial-gradient(circle, #ffd700 0%, #ffed4e 100%) !important;
+  box-shadow: 
+    0 0 0 3px #ffd700,
+    0 0 20px rgba(255, 215, 0, 0.6),
+    0 4px 12px rgba(0, 0, 0, 0.2);
+  animation: selectedPulse 1.5s ease-in-out infinite alternate;
+  z-index: 10;
+}
+
+@keyframes selectedPulse {
+  0% {
+    box-shadow: 
+      0 0 0 3px #ffd700,
+      0 0 20px rgba(255, 215, 0, 0.6),
+      0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+  100% {
+    box-shadow: 
+      0 0 0 4px #ffd700,
+      0 0 30px rgba(255, 215, 0, 0.8),
+      0 6px 16px rgba(0, 0, 0, 0.3);
+  }
+}
+
+/* 移動可能ハイライト */
+.board-square.highlight-move {
+  background: radial-gradient(circle, #90ee90 0%, #32cd32 100%) !important;
+  box-shadow: 
+    0 0 0 2px #32cd32,
+    0 0 15px rgba(50, 205, 50, 0.5);
+  animation: moveHighlight 1s ease-in-out infinite alternate;
+}
+
+@keyframes moveHighlight {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.05);
+  }
+}
+
+/* 攻撃可能ハイライト */
+.board-square.highlight-attack {
+  background: radial-gradient(circle, #ff6b6b 0%, #e74c3c 100%) !important;
+  box-shadow: 
+    0 0 0 2px #e74c3c,
+    0 0 15px rgba(231, 76, 60, 0.5);
+  animation: attackHighlight 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes attackHighlight {
+  0% {
+    box-shadow: 
+      0 0 0 2px #e74c3c,
+      0 0 15px rgba(231, 76, 60, 0.5);
+  }
+  100% {
+    box-shadow: 
+      0 0 0 3px #e74c3c,
+      0 0 25px rgba(231, 76, 60, 0.8);
+  }
+}
+
+/* 選択可能ハイライト */
+.board-square.highlight-select {
+  box-shadow: 
+    0 0 0 2px #3498db,
+    0 0 10px rgba(52, 152, 219, 0.4);
+}
+
+/* 駒のスタイル */
+.piece {
+  font-size: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  user-select: none;
+  position: relative;
+  z-index: 5;
+  transition: all 0.3s ease;
+}
+
+.piece.player1 {
+  color: #3498db;
+  text-shadow: 
+    0 0 10px rgba(52, 152, 219, 0.5),
+    2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.piece.player2 {
+  color: #e74c3c;
+  text-shadow: 
+    0 0 10px rgba(231, 76, 60, 0.5),
+    2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 1024px) {
+  .board-square {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .piece {
+    font-size: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .board-square {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .piece {
+    font-size: 20px;
+  }
+  
+  .board-square:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .board-square {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .piece {
+    font-size: 16px;
+  }
+}
+
+/* アクセシビリティ対応 */
+.board-square:focus {
+  outline: 3px solid #3498db;
+  outline-offset: 2px;
+  z-index: 20;
+}
+
+/* 高コントラストモード */
+@media (prefers-contrast: high) {
+  .light-square {
+    background: #fff;
+    border: 1px solid #000;
+  }
+  
+  .dark-square {
+    background: #ccc;
+    border: 1px solid #000;
+  }
+  
+  .piece.player1 {
+    color: #000;
+    text-shadow: none;
+  }
+  
+  .piece.player2 {
+    color: #000;
+    text-shadow: none;
+  }
+}
+
+/* 動きを減らす設定 */
+@media (prefers-reduced-motion: reduce) {
+  .board-square,
+  .board-square::before,
+  .piece {
+    animation: none;
+    transition: none;
+  }
+  
+  .board-square:hover {
+    transform: none;
+  }
+}

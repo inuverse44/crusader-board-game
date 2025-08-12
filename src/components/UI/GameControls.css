@@ -1,0 +1,308 @@
+/* ゲームコントロールパネルのスタイル */
+.game-controls {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 250, 0.95) 100%);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  padding: 24px;
+  min-width: 280px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  transition: all 0.3s ease;
+}
+
+.game-controls:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.game-controls-header h3 {
+  margin: 0 0 20px 0;
+  color: #2c3e50;
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #e74c3c, #f39c12);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+}
+
+.game-controls-header h3::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(135deg, #e74c3c, #f39c12);
+  border-radius: 2px;
+}
+
+.control-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.new-game-button,
+.end-turn-button {
+  padding: 16px 20px;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  position: relative;
+  overflow: hidden;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.new-game-button::before,
+.end-turn-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: left 0.5s ease;
+}
+
+.new-game-button:hover::before,
+.end-turn-button:hover::before {
+  left: 100%;
+}
+
+.new-game-button {
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  color: white;
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+}
+
+.new-game-button:hover {
+  background: linear-gradient(135deg, #2980b9, #1f4e79);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
+}
+
+.new-game-button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+}
+
+.end-turn-button {
+  background: linear-gradient(135deg, #27ae60, #229954);
+  color: white;
+  box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+}
+
+.end-turn-button:hover {
+  background: linear-gradient(135deg, #229954, #1e8449);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(39, 174, 96, 0.4);
+}
+
+.end-turn-button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+}
+
+.game-instructions {
+  background: rgba(52, 152, 219, 0.1);
+  border: 1px solid rgba(52, 152, 219, 0.2);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  backdrop-filter: blur(5px);
+}
+
+.game-instructions h4 {
+  margin: 0 0 16px 0;
+  color: #2c3e50;
+  font-size: 1.2rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.game-instructions h4::before {
+  content: '💡';
+  font-size: 1.1rem;
+}
+
+.game-instructions ul {
+  margin: 0;
+  padding-left: 24px;
+  color: #34495e;
+}
+
+.game-instructions li {
+  margin-bottom: 8px;
+  font-size: 1rem;
+  line-height: 1.5;
+  position: relative;
+}
+
+.game-instructions li::marker {
+  color: #3498db;
+  font-weight: bold;
+}
+
+.game-over-controls {
+  text-align: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #f39c12, #e67e22);
+  border-radius: 12px;
+  color: white;
+  box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+  animation: gameOverGlow 2s ease-in-out infinite alternate;
+}
+
+@keyframes gameOverGlow {
+  0% {
+    box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+  }
+  100% {
+    box-shadow: 0 6px 20px rgba(243, 156, 18, 0.5);
+  }
+}
+
+.game-over-controls p {
+  margin: 8px 0;
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 1024px) {
+  .game-controls {
+    min-width: 260px;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .game-controls {
+    margin: 0;
+    padding: 16px;
+    min-width: 240px;
+  }
+  
+  .game-controls-header h3 {
+    font-size: 1.3rem;
+  }
+  
+  .new-game-button,
+  .end-turn-button {
+    padding: 14px 18px;
+    font-size: 1rem;
+  }
+  
+  .game-instructions {
+    padding: 16px;
+  }
+  
+  .game-instructions h4 {
+    font-size: 1.1rem;
+  }
+  
+  .game-instructions li {
+    font-size: 0.9rem;
+  }
+}
+
+/* ボタンのフォーカス状態 */
+.new-game-button:focus,
+.end-turn-button:focus {
+  outline: 3px solid rgba(52, 152, 219, 0.5);
+  outline-offset: 3px;
+}
+
+/* ボタンの無効状態 */
+.new-game-button:disabled,
+.end-turn-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  background: #95a5a6;
+  box-shadow: none;
+}
+
+.new-game-button:disabled:hover,
+.end-turn-button:disabled:hover {
+  transform: none;
+  background: #95a5a6;
+  box-shadow: none;
+}
+
+.new-game-button:disabled::before,
+.end-turn-button:disabled::before {
+  display: none;
+}
+
+/* 高コントラストモード */
+@media (prefers-contrast: high) {
+  .game-controls {
+    background: #fff;
+    border: 2px solid #000;
+  }
+  
+  .game-controls-header h3 {
+    color: #000;
+    -webkit-text-fill-color: #000;
+  }
+  
+  .new-game-button {
+    background: #000;
+    color: #fff;
+  }
+  
+  .end-turn-button {
+    background: #333;
+    color: #fff;
+  }
+  
+  .game-instructions {
+    background: #f0f0f0;
+    border: 1px solid #000;
+  }
+}
+
+/* 動きを減らす設定 */
+@media (prefers-reduced-motion: reduce) {
+  .game-controls,
+  .new-game-button,
+  .end-turn-button,
+  .game-over-controls {
+    animation: none;
+    transition: none;
+  }
+  
+  .game-controls:hover,
+  .new-game-button:hover,
+  .end-turn-button:hover {
+    transform: none;
+  }
+  
+  .new-game-button::before,
+  .end-turn-button::before {
+    display: none;
+  }
+}

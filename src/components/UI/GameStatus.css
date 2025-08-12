@@ -1,0 +1,274 @@
+/* ゲーム状況パネルのスタイル */
+.game-status {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 250, 0.95) 100%);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  padding: 24px;
+  min-width: 280px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  transition: all 0.3s ease;
+}
+
+.game-status:hover {
+  transform: translateY(-2px);
+  box-shadow: 
+    0 12px 40px rgba(0, 0, 0, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.game-status-header h2 {
+  margin: 0 0 20px 0;
+  color: #2c3e50;
+  text-align: center;
+  font-size: 1.6rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, #3498db, #9b59b6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+}
+
+.game-status-header h2::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(135deg, #3498db, #9b59b6);
+  border-radius: 2px;
+}
+
+.current-turn {
+  text-align: center;
+  margin-bottom: 24px;
+  padding: 16px;
+  background: rgba(52, 152, 219, 0.1);
+  border-radius: 12px;
+  border: 1px solid rgba(52, 152, 219, 0.2);
+}
+
+.current-turn h3 {
+  margin: 0 0 8px 0;
+  font-size: 1.4rem;
+  color: #2c3e50;
+  font-weight: 700;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.light-infantry-status {
+  margin: 8px 0 0 0;
+  font-size: 1rem;
+  color: #7f8c8d;
+  font-weight: 500;
+  padding: 8px 12px;
+  background: rgba(155, 89, 182, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(155, 89, 182, 0.2);
+}
+
+.piece-counts {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.piece-count {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.piece-count::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  transition: all 0.3s ease;
+}
+
+.piece-count:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.heavy-pieces::before {
+  background: linear-gradient(135deg, #3498db, #2980b9);
+}
+
+.light-pieces::before {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+}
+
+.piece-icon {
+  font-size: 1.5rem;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(52, 152, 219, 0.1);
+  transition: all 0.3s ease;
+}
+
+.heavy-pieces .piece-icon {
+  background: rgba(52, 152, 219, 0.15);
+  color: #3498db;
+}
+
+.light-pieces .piece-icon {
+  background: rgba(231, 76, 60, 0.15);
+  color: #e74c3c;
+}
+
+.piece-label {
+  font-weight: 600;
+  color: #2c3e50;
+  font-size: 1.1rem;
+  flex: 1;
+}
+
+.piece-number {
+  font-weight: 700;
+  color: #2c3e50;
+  font-size: 1.3rem;
+  padding: 4px 12px;
+  background: rgba(52, 152, 219, 0.1);
+  border-radius: 20px;
+  min-width: 40px;
+  text-align: center;
+}
+
+.heavy-pieces .piece-number {
+  background: rgba(52, 152, 219, 0.15);
+  color: #3498db;
+}
+
+.light-pieces .piece-number {
+  background: rgba(231, 76, 60, 0.15);
+  color: #e74c3c;
+}
+
+.game-over-message {
+  text-align: center;
+  padding: 20px;
+  background: linear-gradient(135deg, #f39c12, #e67e22);
+  border-radius: 12px;
+  margin-top: 20px;
+  color: white;
+  box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+  animation: gameOverPulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes gameOverPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 4px 15px rgba(243, 156, 18, 0.3);
+  }
+  100% {
+    transform: scale(1.02);
+    box-shadow: 0 6px 20px rgba(243, 156, 18, 0.4);
+  }
+}
+
+.game-over-message p {
+  margin: 8px 0;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.winner-message {
+  font-size: 1.3rem !important;
+  font-weight: 700 !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+  margin-top: 12px !important;
+}
+
+/* レスポンシブデザイン */
+@media (max-width: 1024px) {
+  .game-status {
+    min-width: 260px;
+    padding: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .game-status {
+    margin: 0;
+    padding: 16px;
+    min-width: 240px;
+  }
+  
+  .game-status-header h2 {
+    font-size: 1.4rem;
+  }
+  
+  .current-turn h3 {
+    font-size: 1.2rem;
+  }
+  
+  .piece-count {
+    padding: 12px;
+  }
+  
+  .piece-icon {
+    font-size: 1.3rem;
+    width: 28px;
+    height: 28px;
+  }
+}
+
+/* 高コントラストモード */
+@media (prefers-contrast: high) {
+  .game-status {
+    background: #fff;
+    border: 2px solid #000;
+  }
+  
+  .game-status-header h2 {
+    color: #000;
+    -webkit-text-fill-color: #000;
+  }
+  
+  .current-turn {
+    background: #f0f0f0;
+    border: 1px solid #000;
+  }
+  
+  .piece-count {
+    background: #fff;
+    border: 1px solid #000;
+  }
+}
+
+/* 動きを減らす設定 */
+@media (prefers-reduced-motion: reduce) {
+  .game-status,
+  .piece-count,
+  .game-over-message {
+    animation: none;
+    transition: none;
+  }
+  
+  .game-status:hover,
+  .piece-count:hover {
+    transform: none;
+  }
+}
