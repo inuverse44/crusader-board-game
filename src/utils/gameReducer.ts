@@ -165,21 +165,44 @@ export function gameReducer(state: GameState, action: GameAction): GameState {
         return state;
       }
       
-      const newBoard = removePiece(state.board, target);
-      const winner = checkWinner(newBoard);
-      const newCurrentPlayer = state.currentPlayer === 'player1' ? 'player2' : 'player1';
+      // まず対象を除去
+      const boardAfterRemoval = removePiece(state.board, target);
       
-      return {
-        ...state,
-        board: newBoard,
-        currentPlayer: newCurrentPlayer,
-        selectedPiece: null,
-        possibleMoves: [],
-        possibleAttacks: [],
-        gamePhase: winner ? 'gameOver' : 'playing',
-        winner,
-        lightPiecesMovedThisTurn: 0
-      };
+      if (attackerPiece.type === 'light') {
+        // 軽装兵: 撃破マスへ前進し、行動回数をカウント
+        const boardAfterAdvance = updatePiecePosition(boardAfterRemoval, attacker, target);
+        const winner = checkWinner(boardAfterAdvance);
+        const movedCount = state.lightPiecesMovedThisTurn + 1;
+        const reachTurnEnd = movedCount >= 2;
+        
+        return {
+          ...state,
+          board: boardAfterAdvance,
+          currentPlayer: reachTurnEnd ? 'player1' : 'player2',
+          selectedPiece: null,
+          possibleMoves: [],
+          possibleAttacks: [],
+          gamePhase: winner ? 'gameOver' : 'playing',
+          winner,
+          lightPiecesMovedThisTurn: reachTurnEnd ? 0 : movedCount
+        };
+      } else {
+        // 重装兵: 前進なし、即ターン交代
+        const winner = checkWinner(boardAfterRemoval);
+        const newCurrentPlayer = state.currentPlayer === 'player1' ? 'player2' : 'player1';
+        
+        return {
+          ...state,
+          board: boardAfterRemoval,
+          currentPlayer: newCurrentPlayer,
+          selectedPiece: null,
+          possibleMoves: [],
+          possibleAttacks: [],
+          gamePhase: winner ? 'gameOver' : 'playing',
+          winner,
+          lightPiecesMovedThisTurn: 0
+        };
+      }
     }
     
     case 'END_TURN': {

@@ -41,9 +41,9 @@ const GameBoard: React.FC<GameBoardProps> = ({ gameState, onSquareClick, onPiece
     if (isPositionInArray(position, possibleAttacks)) {
       return 'attack';
     }
-    // 現在のプレイヤーの駒で、選択可能な駒の場合
+    // 現在のプレイヤーの駒で、選択可能な駒の場合（別駒への再選択も許可）
     const piece = board[position.row][position.col];
-    if (piece && isPieceSelectable(piece) && !selectedPiece) {
+    if (piece && isPieceSelectable(piece)) {
       return 'select';
     }
     return null;

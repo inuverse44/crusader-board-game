@@ -59,7 +59,9 @@ describe('Victory Conditions (Requirements 6.1, 6.2)', () => {
       
       expect(finalState.gamePhase).toBe('gameOver');
       expect(finalState.winner).toBe('player2');
-      expect(finalState.board[4][4]).toBeNull(); // Heavy piece should be eliminated
+      // Heavy piece is eliminated and light advances into the square
+      expect(finalState.board[4][4]).not.toBeNull();
+      expect(finalState.board[4][4]!.type).toBe('light');
     });
 
     it('should declare player1 victory when all light pieces are eliminated', () => {

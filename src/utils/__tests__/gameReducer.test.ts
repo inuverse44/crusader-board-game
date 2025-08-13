@@ -202,7 +202,7 @@ describe('gameReducer', () => {
       expect(newState.selectedPiece).toBeNull();
     });
 
-    it('should allow light pieces to cooperatively attack heavy piece', () => {
+    it('should allow light pieces to cooperatively attack heavy piece and advance', () => {
       // Set up scenario with 2 light pieces adjacent to a heavy piece
       const customState = createInitialGameState();
       
@@ -246,8 +246,11 @@ describe('gameReducer', () => {
       
       const newState = gameReducer(state, attackAction);
       
-      expect(newState.board[4][4]).toBeNull(); // Heavy piece should be removed
-      expect(newState.currentPlayer).toBe('player1');
+      // Heavy is removed and light advances into target square
+      expect(newState.board[4][4]).not.toBeNull();
+      expect(newState.board[4][4]!.type).toBe('light');
+      expect(newState.currentPlayer).toBe('player2'); // Still player2's turn until two actions
+      expect(newState.lightPiecesMovedThisTurn).toBe(1);
     });
 
     it('should not allow single light piece to attack heavy piece', () => {
@@ -369,6 +372,9 @@ describe('gameReducer', () => {
       
       expect(newState.gamePhase).toBe('gameOver');
       expect(newState.winner).toBe('player2');
+      // Light has advanced into the defeated heavy's square
+      expect(newState.board[4][4]).not.toBeNull();
+      expect(newState.board[4][4]!.type).toBe('light');
     });
 
     it('should detect player1 win when all light pieces are eliminated', () => {

@@ -57,12 +57,24 @@ const BoardSquare: React.FC<BoardSquareProps> = ({
     
     const isSelectable = highlightType === 'select';
     
+    // 駒クリック時の挙動:
+    // - 選択可能な自軍の駒: onPieceClick を呼ぶ
+    // - 攻撃対象の敵駒: マスの onClick を呼んで攻撃を実行
+    // - それ以外: 何もしない
+    const pieceOnClick = () => {
+      if (isSelectable) {
+        handlePieceClick();
+      } else if (highlightType === 'attack') {
+        onClick(position);
+      }
+    };
+    
     return (
       <GamePiece
         piece={piece}
         isSelected={isSelected}
         isSelectable={isSelectable}
-        onClick={handlePieceClick}
+        onClick={pieceOnClick}
       />
     );
   };
