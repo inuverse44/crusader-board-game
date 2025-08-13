@@ -1,5 +1,5 @@
 import { useReducer, useCallback } from 'react';
-import { GameState, GameAction, GamePiece, Position } from '../types';
+import { GameState, GameAction, GamePiece, Position, Player } from '../types';
 import { gameReducer, createInitialGameState } from '../utils/gameReducer';
 
 export function useGameState() {
@@ -30,6 +30,11 @@ export function useGameState() {
     dispatch({ type: 'NEW_GAME' });
   }, []);
 
+  // オプション付きで新しいゲームを開始する（先行プレイヤー選択など）
+  const newGameWithOptions = useCallback((options?: { startingPlayer?: Player }) => {
+    dispatch({ type: 'NEW_GAME_WITH_OPTIONS', options });
+  }, []);
+
   // ゲーム状態をリセットする（newGameのエイリアス）
   const resetGame = useCallback(() => {
     dispatch({ type: 'NEW_GAME' });
@@ -45,6 +50,7 @@ export function useGameState() {
     attackPiece,
     endTurn,
     newGame,
+    newGameWithOptions,
     resetGame,
     
     // 便利なゲッター

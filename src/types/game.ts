@@ -33,4 +33,5 @@ export type GameAction =
   | { type: 'MOVE_PIECE'; from: Position; to: Position }
   | { type: 'ATTACK_PIECE'; attacker: Position; target: Position }
   | { type: 'END_TURN' }
-  | { type: 'NEW_GAME' };
+  | { type: 'NEW_GAME' }
+  | { type: 'NEW_GAME_WITH_OPTIONS'; options?: { startingPlayer?: Player } };

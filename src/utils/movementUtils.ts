@@ -1,4 +1,5 @@
 import { GamePiece, Position, Player } from '../types';
+import { getRulesConfig } from './rulesConfig';
 
 /**
  * 位置がボード範囲内かどうかをチェックする
@@ -62,18 +63,23 @@ export function calculateLightPieceMoves(
 ): Position[] {
   const moves: Position[] = [];
   const { row, col } = piece.position;
+  const { enhancedLightMovement } = getRulesConfig();
 
   for (const [dRow, dCol] of EIGHT_DIRECTIONS) {
-    const newPosition: Position = {
-      row: row + dRow,
-      col: col + dCol
-    };
+    // 1マス先
+    const oneStep: Position = { row: row + dRow, col: col + dCol };
+    if (isValidPosition(oneStep) && board[oneStep.row][oneStep.col] === null) {
+      moves.push(oneStep);
 
-    // ボード範囲内かチェック
-    if (isValidPosition(newPosition)) {
-      // そのマスが空いているかチェック（他の駒との衝突判定）
-      if (board[newPosition.row][newPosition.col] === null) {
-        moves.push(newPosition);
+      // 2マス先（強化時のみ）。経路の途中も空である必要あり。
+      if (enhancedLightMovement) {
+        const twoStep: Position = { row: row + 2 * dRow, col: col + 2 * dCol };
+        if (
+          isValidPosition(twoStep) &&
+          board[twoStep.row][twoStep.col] === null
+        ) {
+          moves.push(twoStep);
+        }
       }
     }
   }

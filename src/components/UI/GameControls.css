@@ -13,6 +13,30 @@
   transition: all 0.3s ease;
 }
 
+.advanced-settings {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.advanced-settings fieldset {
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 12px;
+  padding: 10px 12px;
+}
+
+.advanced-settings legend {
+  padding: 0 6px;
+  color: #2c3e50;
+  font-weight: 700;
+}
+
+.advanced-settings label {
+  display: block;
+  margin: 6px 0;
+  color: #34495e;
+}
+
 .game-controls:hover {
   transform: translateY(-2px);
   box-shadow: 

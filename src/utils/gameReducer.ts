@@ -2,7 +2,7 @@ import { GameState, GameAction, GamePiece, Player, Position } from '../types';
 import { calculatePossibleMoves, calculatePossibleAttacks, positionsEqual } from './movementUtils';
 
 // 初期状態を生成する関数
-export function createInitialGameState(): GameState {
+export function createInitialGameState(options?: { startingPlayer?: Player }): GameState {
   const board: (GamePiece | null)[][] = Array(8).fill(null).map(() => Array(8).fill(null));
   
   // 重装兵（player1）を最下段に配置
@@ -27,9 +27,9 @@ export function createInitialGameState(): GameState {
     board[0][col] = piece;
   }
   
-  return {
+  const base: GameState = {
     board,
-    currentPlayer: 'player1', // 重装兵から開始
+    currentPlayer: 'player1', // デフォルトは重装兵から開始
     selectedPiece: null,
     possibleMoves: [],
     possibleAttacks: [],
@@ -37,6 +37,12 @@ export function createInitialGameState(): GameState {
     winner: null,
     lightPiecesMovedThisTurn: 0
   };
+
+  // 先行プレイヤーの指定
+  if (options?.startingPlayer) {
+    base.currentPlayer = options.startingPlayer;
+  }
+  return base;
 }
 
 // Note: positionsEqual is now imported from movementUtils
@@ -87,6 +93,10 @@ function checkWinner(board: (GamePiece | null)[][]): Player | null {
 // ゲーム状態のreducer
 export function gameReducer(state: GameState, action: GameAction): GameState {
   switch (action.type) {
+    case 'NEW_GAME_WITH_OPTIONS': {
+      const next = createInitialGameState({ startingPlayer: action.options?.startingPlayer });
+      return next;
+    }
     case 'SELECT_PIECE': {
       const { piece } = action;
       

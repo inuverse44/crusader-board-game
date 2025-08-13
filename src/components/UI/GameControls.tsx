@@ -6,12 +6,29 @@ interface GameControlsProps {
   gameState: GameState;
   onNewGame: () => void;
   onEndTurn: () => void;
+  // Optional advanced controls
+  startingPlayer?: 'player1' | 'player2';
+  onStartingPlayerChange?: (player: 'player1' | 'player2') => void;
+  cpuPlayer1?: boolean;
+  cpuPlayer2?: boolean;
+  onToggleCpuPlayer1?: (v: boolean) => void;
+  onToggleCpuPlayer2?: (v: boolean) => void;
+  enhancedLightMovement?: boolean;
+  onToggleEnhancedLightMovement?: (v: boolean) => void;
 }
 
 export const GameControls: React.FC<GameControlsProps> = ({ 
   gameState, 
   onNewGame, 
-  onEndTurn 
+  onEndTurn,
+  startingPlayer,
+  onStartingPlayerChange,
+  cpuPlayer1,
+  cpuPlayer2,
+  onToggleCpuPlayer1,
+  onToggleCpuPlayer2,
+  enhancedLightMovement,
+  onToggleEnhancedLightMovement,
 }) => {
   // 軽装兵のターン終了ボタンを表示するかどうか
   const showEndTurnButton = () => {
@@ -35,6 +52,62 @@ export const GameControls: React.FC<GameControlsProps> = ({
         <h3>ゲーム操作</h3>
       </div>
       
+      <div className="advanced-settings">
+        <fieldset>
+          <legend>先行プレイヤー</legend>
+          <label>
+            <input
+              type="radio"
+              name="starting-player"
+              checked={startingPlayer === 'player1'}
+              onChange={() => onStartingPlayerChange && onStartingPlayerChange('player1')}
+            />
+            重装兵（player1）
+          </label>
+          <label>
+            <input
+              type="radio"
+              name="starting-player"
+              checked={startingPlayer === 'player2'}
+              onChange={() => onStartingPlayerChange && onStartingPlayerChange('player2')}
+            />
+            軽装兵（player2）
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>CPU 設定</legend>
+          <label>
+            <input
+              type="checkbox"
+              checked={!!cpuPlayer1}
+              onChange={(e) => onToggleCpuPlayer1 && onToggleCpuPlayer1(e.target.checked)}
+            />
+            CPU: 重装兵（player1）
+          </label>
+          <label>
+            <input
+              type="checkbox"
+              checked={!!cpuPlayer2}
+              onChange={(e) => onToggleCpuPlayer2 && onToggleCpuPlayer2(e.target.checked)}
+            />
+            CPU: 軽装兵（player2）
+          </label>
+        </fieldset>
+
+        <fieldset>
+          <legend>ルール</legend>
+          <label>
+            <input
+              type="checkbox"
+              checked={!!enhancedLightMovement}
+              onChange={(e) => onToggleEnhancedLightMovement && onToggleEnhancedLightMovement(e.target.checked)}
+            />
+            軽装兵の移動を2マスまで許可
+          </label>
+        </fieldset>
+      </div>
+
       <div className="control-buttons">
         <button 
           className="new-game-button"
